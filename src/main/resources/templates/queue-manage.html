@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <title th:text="${queue.name}">Управління чергою</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+
+<nav class="site-nav container">
+    <a th:href="@{/}">Головна</a>
+    <a href="#">Про черги</a>
+    <a href="#">Допомога</a>
+</nav>
+
+<div class="container">
+
+    <header>
+        <h1 th:text="${queue.name}">Назва черги</h1>
+        <button th:onclick="'location.href=\'/\''">← Назад</button>
+    </header>
+
+    <main>
+
+
+        <section>
+            <p>Ця черга призначена для демонстрації роботи системи електронної черги.
+                Тут можна додавати учасників, переходити до наступного, видаляти та закривати чергу.</p>
+        </section>
+
+
+        <section th:if="${!queue.open}">
+            <p>⚠️ Черга закрита. Поверніться на головну, щоб переглянути інші.</p>
+
+            <form th:action="@{|/queues/${queue.id}/open|}" method="post" class="form-block">
+                <input name="password" placeholder="Пароль хазяїна" type="text" required/>
+                <button type="submit">Відкрити чергу</button>
+            </form>
+
+            <h2>Видалені учасники:</h2>
+            <ul>
+                <li th:each="rp : ${queue.removedParticipants}">
+                    <span th:text="${rp}">Ім’я</span> — <em>Видалений</em>
+                </li>
+            </ul>
+
+        </section>
+
+
+
+        <section th:if="${queue.open}">
+
+            <h2>Учасники:</h2>
+            <ul>
+                <li th:each="p : ${queue.participants}" th:text="${p}">Учасник</li>
+            </ul>
+
+            <div class="form-block">
+                <form th:action="@{|/queues/${queue.id}/join|}" method="post" style="width:100%; display:flex; gap:0.5rem;">
+                    <input name="participant" placeholder="Ваше ім’я" type="text" required/>
+                    <button type="submit">Встати в чергу</button>
+                </form>
+            </div>
+
+            <div class="action-group">
+
+                <form th:action="@{|/queues/${queue.id}/next|}" method="post" class="form-block">
+                    <input name="password" placeholder="Пароль хазяїна" type="text" required/>
+                    <button type="submit">Наступний</button>
+                </form>
+
+                <form th:action="@{|/queues/${queue.id}/remove|}" method="post" class="form-block">
+                    <input name="participant" placeholder="Ім’я учасника" type="text" required/>
+                    <input name="password" placeholder="Пароль хазяїна" type="text" required/>
+                    <button type="submit">Видалити</button>
+                </form>
+
+                <form th:action="@{|/queues/${queue.id}/close|}" method="post" class="form-block">
+                    <input name="password" placeholder="Пароль хазяїна" type="text" required/>
+                    <button type="submit">Закрити чергу</button>
+                </form>
+
+            </div>
+
+            <p th:if="${error}" style="color:#faa61a;" th:text="${error}"></p>
+
+            <hr/>
+
+            <h2>Видалені учасники:</h2>
+            <ul>
+                <li th:each="rp : ${queue.removedParticipants}">
+                    <span th:text="${rp}">Ім’я</span> — <em>Видалений</em>
+                </li>
+            </ul>
+
+        </section>
+
+    </main>
+</div>
+
+<footer class="user-logo">
+    <span>ZetiX</span> <!-- Замените на ваш ник -->
+</footer>
+
+</body>
+</html>

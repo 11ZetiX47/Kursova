@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <title>Список черг</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+
+<nav class="site-nav container">
+    <a th:href="@{/}">Головна</a>
+    <a href="#">Документація</a>
+    <a href="#">Контакти</a>
+</nav>
+
+<div class="container">
+
+    <header>
+        <h1>Список черг</h1>
+        <button th:onclick="'location.reload()'">⟳ Оновити</button>
+    </header>
+
+    <main>
+
+        <div class="form-block">
+            <form th:action="@{/queues}" method="post" style="width:100%; display:flex; gap:0.5rem;">
+                <input name="name" placeholder="Назва черги" type="text" required/>
+                <input name="password" placeholder="Пароль хазяїна" type="text" required/>
+                <button type="submit">Створити чергу</button>
+            </form>
+        </div>
+
+        <div class="queue-list">
+            <div th:each="q : ${queues}" class="queue-card">
+                <h3 th:text="${q.name}">Назва</h3>
+                <p th:if="${q.open}" style="color:#43b581;">Відкрита</p>
+                <p th:if="${!q.open}" style="color:#f04747;">Закрита</p>
+                <button th:onclick="'location.href=\'/queues/'+${q.id}+'/manage\''">
+                    Керувати
+                </button>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<footer class="user-logo">
+    <span>ZetiX</span> <!-- Замените на ваш ник -->
+</footer>
+
+</body>
+</html>
