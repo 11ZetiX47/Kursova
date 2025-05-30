@@ -159,17 +159,16 @@ button.create-queue-btn {
 }
 
 .user-logo {
-    position: fixed; /* Фиксированное положение */
-    bottom: 20px;   /* Отступ от низа */
-    left: 50%;      /* Центрирование */
-    transform: translateX(-50%); /* Точное выравнивание по центру */
-    z-index: 1000;  /* Поверх других элементов */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
 
-    /* Стилизация (подстройте под ваш дизайн) */
     font-family: 'Calibri', sans-serif;
     font-size: 22px;
     color: #b9bbbe;
-    background-color: rgba(32, 34, 37, 0.7); /* Полупрозрачный фон */
+    background-color: rgba(32, 34, 37, 0.7);
     padding: 12px 24px;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -177,7 +176,7 @@ button.create-queue-btn {
 
 .user-logo:hover {
     color: #ffffff;
-    background-color: #5e2fff; /* Цвет как у ваших кнопок */
+    background-color: #5e2fff;
 }
 
 @media (max-width: 600px) {
@@ -185,4 +184,9 @@ button.create-queue-btn {
         font-size: 12px;
         bottom: 10px;
     }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
